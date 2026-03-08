@@ -1,0 +1,24 @@
+name: Build VRChat yt-dlp Updater
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # 允许你在 GitHub 网页上手动点击运行
+
+jobs:
+  build:
+    runs-on: windows-latest # 使用 GitHub 提供的 Windows 编译环境
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Compile EXE using GCC
+      # 使用 Windows 环境自带的 gcc 编译 C 代码
+      run: gcc main.c -o Update_VRChat_ytdlp.exe
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: VRChat_Updater
+        path: Update_VRChat_ytdlp.exe
